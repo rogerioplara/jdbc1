@@ -11,7 +11,7 @@ public class Main {
         // Connection conn = DB.getConnection();
         // DB.closeConnection();
 
-        inserirDados();
+        atualizarDados();
 
     }
 
@@ -104,5 +104,43 @@ public class Main {
             DB.closeStatement(st);
             DB.closeConnection();
         }
+    }
+
+    public static void atualizarDados(){
+        Connection conn = null;
+
+        PreparedStatement st = null;
+
+        try {
+            conn = DB.getConnection();
+
+            st = conn.prepareStatement(
+                "UPDATE seller "
+                + "SET BaseSalary = BaseSalary + ? "
+                + "WHERE "
+                + "(DepartmentId = ?)"
+
+            );
+
+            st.setDouble(1, 200.00);
+            st.setInt(2, 2);
+
+            int rowsAffected = st.executeUpdate();
+
+            System.out.println("Done! Rows affected: " + rowsAffected);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+//            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+            DB.closeConnection();
+        }
+    }
+
+    public static void deletarDados(){
+        Connection conn = null;
+
+
     }
 }
